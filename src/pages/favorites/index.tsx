@@ -7,6 +7,7 @@ import { useFavorites } from '@/hooks/useFavorites'
 import BookCard from '@/components/BookCard'
 import ErrorView from '@/components/ErrorView'
 import { SkeletonBookCard } from '@/components/Skeleton'
+import { getErrorMessage } from '@/utils/error'
 import './index.scss'
 
 export default function FavoritesPage() {
@@ -28,7 +29,7 @@ export default function FavoritesPage() {
       const favSet = new Set(favorites)
       setBooks(all.filter((b) => favSet.has(b.id)))
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
+      setError(getErrorMessage(e))
     } finally {
       setLoading(false)
     }

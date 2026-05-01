@@ -10,6 +10,7 @@ import { useHistory } from '@/hooks/useHistory'
 import SafeImage from '@/components/SafeImage'
 import ErrorView from '@/components/ErrorView'
 import { SkeletonDetail } from '@/components/Skeleton'
+import { getErrorMessage } from '@/utils/error'
 import './index.scss'
 
 export default function DetailPage() {
@@ -43,7 +44,7 @@ export default function DetailPage() {
         }
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
+      setError(getErrorMessage(e))
     } finally {
       setLoading(false)
     }

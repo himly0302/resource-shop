@@ -2,6 +2,7 @@ import { useState, useRef, useCallback } from 'react'
 import { loadAllCategories } from '@/services/data'
 import type { Book } from '@/services/data'
 import { filterBooks, debounce } from '@/utils/search'
+import { getErrorMessage } from '@/utils/error'
 import { MIN_SEARCH_LENGTH, SEARCH_DEBOUNCE_MS } from '@/constants/cdn'
 
 export function useSearch() {
@@ -24,7 +25,7 @@ export function useSearch() {
       }
       setResults(filterBooks(allBooksRef.current, kw))
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
+      setError(getErrorMessage(e))
     } finally {
       setLoading(false)
     }

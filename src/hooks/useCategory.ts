@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { loadCategory } from '@/services/data'
 import type { Book } from '@/services/data'
 import { PAGE_SIZE } from '@/constants/cdn'
+import { getErrorMessage } from '@/utils/error'
 
 export function useCategory(type: string) {
   const [books, setBooks] = useState<Book[]>([])
@@ -25,7 +26,7 @@ export function useCategory(type: string) {
       })
       .catch((e) => {
         if (!cancelled) {
-          setError(e instanceof Error ? e.message : String(e))
+          setError(getErrorMessage(e))
           setHasMore(false)
         }
       })
@@ -56,7 +57,7 @@ export function useCategory(type: string) {
         setHasMore(data.length > PAGE_SIZE)
       })
       .catch((e) => {
-        setError(e instanceof Error ? e.message : String(e))
+        setError(getErrorMessage(e))
         setHasMore(false)
       })
       .finally(() => {

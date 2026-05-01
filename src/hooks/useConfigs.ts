@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { loadConfigs, loadIndex, clearCache } from '@/services/data'
 import type { Configs, CategoryIndex } from '@/services/data'
+import { getErrorMessage } from '@/utils/error'
 
 export function useConfigs() {
   const [configs, setConfigs] = useState<Configs>({})
@@ -17,7 +18,7 @@ export function useConfigs() {
       setConfigs(cfg)
       setIndex(idx)
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
+      setError(getErrorMessage(e))
     } finally {
       setLoading(false)
     }

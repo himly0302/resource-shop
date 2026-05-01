@@ -8,6 +8,7 @@ import { PAGE_SIZE } from '@/constants/cdn'
 import BookCard from '@/components/BookCard'
 import ErrorView from '@/components/ErrorView'
 import { SkeletonBookCard } from '@/components/Skeleton'
+import { getErrorMessage } from '@/utils/error'
 import './index.scss'
 
 export default function BookListPage() {
@@ -33,7 +34,7 @@ export default function BookListPage() {
       const loaded = await Promise.all(types.map((t) => loadCategory(t)))
       setBooks(loaded.flat().filter((b) => idSet.has(b.id)))
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
+      setError(getErrorMessage(e))
     } finally {
       setLoading(false)
     }
