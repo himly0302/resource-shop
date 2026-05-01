@@ -1,0 +1,9 @@
+.safe-image {
+  &--fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-border;
+    font-size: 40rpx;
+  }
+}
