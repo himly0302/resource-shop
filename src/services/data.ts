@@ -57,7 +57,7 @@ export async function loadCategory(type: string): Promise<Book[]> {
 
 export async function loadAllCategories(): Promise<Book[]> {
   const configs = await loadConfigs()
-  const types = Object.keys(configs)
+  const types = Object.keys(configs).filter((k) => k !== 'index')
   const loaded: Book[][] = await Promise.all(
     types.map(async (type) => {
       if (categoryCache.has(type)) return categoryCache.get(type)!
