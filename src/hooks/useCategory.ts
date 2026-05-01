@@ -24,7 +24,10 @@ export function useCategory(type: string) {
         }
       })
       .catch((e) => {
-        if (!cancelled) setError((e as Error).message)
+        if (!cancelled) {
+          setError(e instanceof Error ? e.message : String(e))
+          setHasMore(false)
+        }
       })
       .finally(() => {
         if (!cancelled) setLoading(false)
@@ -44,5 +47,22 @@ export function useCategory(type: string) {
     setPage(nextPage)
   }
 
-  return { books: displayedBooks, loading, error, hasMore, loadMore }
+  const retry = () => {
+    setLoading(true)
+    setError(null)
+    loadCategory(type)
+      .then((data) => {
+        setBooks(data)
+        setHasMore(data.length > PAGE_SIZE)
+      })
+      .catch((e) => {
+        setError(e instanceof Error ? e.message : String(e))
+        setHasMore(false)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
+  return { books: displayedBooks, loading, error, hasMore, loadMore, retry }
 }

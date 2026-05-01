@@ -28,7 +28,7 @@ export default function FavoritesPage() {
       const favSet = new Set(favorites)
       setBooks(all.filter((b) => favSet.has(b.id)))
     } catch (e) {
-      setError((e as Error).message)
+      setError(e instanceof Error ? e.message : String(e))
     } finally {
       setLoading(false)
     }

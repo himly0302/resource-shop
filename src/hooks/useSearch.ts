@@ -8,6 +8,7 @@ export function useSearch() {
   const [keyword, setKeyword] = useState('')
   const [results, setResults] = useState<Book[]>([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const allBooksRef = useRef<Book[]>([])
 
   const doSearch = useCallback(async (kw: string) => {
@@ -16,11 +17,14 @@ export function useSearch() {
       return
     }
     setLoading(true)
+    setError(null)
     try {
       if (allBooksRef.current.length === 0) {
         allBooksRef.current = await loadAllCategories()
       }
       setResults(filterBooks(allBooksRef.current, kw))
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e))
     } finally {
       setLoading(false)
     }
@@ -36,7 +40,8 @@ export function useSearch() {
   const clear = () => {
     setKeyword('')
     setResults([])
+    setError(null)
   }
 
-  return { keyword, results, loading, search, clear }
+  return { keyword, results, loading, error, search, clear }
 }
