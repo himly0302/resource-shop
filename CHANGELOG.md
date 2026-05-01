@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+- 详情页使用 `loadAllCategories` 替代原始 `Taro.request` 遍历，复用内存缓存，避免重复请求所有配置文件
+
 ## [0.3.0] - 2026-05-01
 
 ### Added

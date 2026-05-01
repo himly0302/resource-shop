@@ -1,12 +1,15 @@
-import { View, Image, Text, Button } from '@tarojs/components'
+import { View, Text, Button } from '@tarojs/components'
 import Taro, { useRouter, useShareAppMessage } from '@tarojs/taro'
-import { useState, useEffect } from 'react'
-import { loadCategory } from '@/services/data'
+import { useState, useEffect, useCallback } from 'react'
+import { loadAllCategories } from '@/services/data'
 import type { Book } from '@/services/data'
-import { CATEGORY_COLORS, DETAIL_IMG_PARAMS, CONFIGS_URL } from '@/constants/cdn'
+import { CATEGORY_COLORS, DETAIL_IMG_PARAMS } from '@/constants/cdn'
 import { copyDownloadLink } from '@/utils/clipboard'
 import { useFavorites } from '@/hooks/useFavorites'
 import { useHistory } from '@/hooks/useHistory'
+import SafeImage from '@/components/SafeImage'
+import ErrorView from '@/components/ErrorView'
+import { SkeletonDetail } from '@/components/Skeleton'
 import './index.scss'
 
 export default function DetailPage() {
@@ -14,35 +17,31 @@ export default function DetailPage() {
   const id = router.params.id || ''
   const [book, setBook] = useState<Book | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const { toggle, isFavorite } = useFavorites()
   const { add } = useHistory()
 
-  useEffect(() => {
+  const loadBook = useCallback(async () => {
     if (!id) return
-
-    const load = async () => {
-      try {
-        const res = await Taro.request({ url: CONFIGS_URL })
-        const configs = res.data as Record<string, string>
-        const types = Object.keys(configs)
-
-        for (const type of types) {
-          const catRes = await Taro.request({ url: configs[type] })
-          const books = catRes.data as Book[]
-          const target = books.find((b) => b.id === id)
-          if (target) {
-            setBook(target)
-            add({ id: target.id, name: target.name, picUrl: target.picUrl })
-            break
-          }
-        }
-      } finally {
-        setLoading(false)
+    setLoading(true)
+    setError(null)
+    try {
+      const all = await loadAllCategories()
+      const target = all.find((b) => b.id === id)
+      if (target) {
+        setBook(target)
+        add({ id: target.id, name: target.name, picUrl: target.picUrl })
       }
+    } catch (e) {
+      setError((e as Error).message)
+    } finally {
+      setLoading(false)
     }
-
-    load()
   }, [id])
+
+  useEffect(() => {
+    loadBook()
+  }, [loadBook])
 
   useShareAppMessage(() => {
     if (!book) return { title: '免费图书', path: '/pages/index/index' }
@@ -56,7 +55,15 @@ export default function DetailPage() {
   if (loading) {
     return (
       <View className="detail-page">
-        <Text className="detail-page__hint">加载中...</Text>
+        <SkeletonDetail />
+      </View>
+    )
+  }
+
+  if (error) {
+    return (
+      <View className="detail-page">
+        <ErrorView onRetry={loadBook} />
       </View>
     )
   }
@@ -74,10 +81,11 @@ export default function DetailPage() {
   return (
     <View className="detail-page">
       <View className="detail-page__body">
-        <Image
+        <SafeImage
           className="detail-page__cover"
           src={book.picUrl + DETAIL_IMG_PARAMS}
           mode="aspectFit"
+          lazyLoad
         />
         <Text className="detail-page__name">{book.name}</Text>
         <View className="detail-page__meta">
