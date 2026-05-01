@@ -1,0 +1,24 @@
+.category-page {
+  min-height: 100vh;
+  background-color: $color-bg;
+
+  &__list {
+    padding: $spacing-md $spacing-lg;
+  }
+
+  &__hint {
+    display: block;
+    text-align: center;
+    color: $color-text-secondary;
+    padding: $spacing-xl 0;
+    font-size: 24rpx;
+  }
+
+  &__more {
+    display: block;
+    text-align: center;
+    color: $color-primary;
+    padding: $spacing-md 0;
+    font-size: 26rpx;
+  }
+}

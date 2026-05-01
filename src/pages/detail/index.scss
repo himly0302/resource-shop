@@ -1,0 +1,124 @@
+.detail-page {
+  min-height: 100vh;
+  background-color: $color-bg;
+  display: flex;
+  flex-direction: column;
+
+  &__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-lg;
+    padding-bottom: 200rpx;
+  }
+
+  &__cover {
+    width: 400rpx;
+    height: 560rpx;
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__name {
+    font-size: 36rpx;
+    font-weight: 600;
+    color: $color-text-primary;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    margin-top: $spacing-sm;
+    gap: $spacing-sm;
+  }
+
+  &__author {
+    font-size: 24rpx;
+    color: $color-text-secondary;
+  }
+
+  &__tag {
+    padding: 4rpx 16rpx;
+    border-radius: 20rpx;
+
+    &-text {
+      font-size: 22rpx;
+      color: #fff;
+    }
+  }
+
+  &__section {
+    width: 100%;
+    margin-top: $spacing-lg;
+
+    &-title {
+      font-size: 28rpx;
+      font-weight: 600;
+      color: $color-text-primary;
+      margin-bottom: $spacing-sm;
+      display: block;
+    }
+  }
+
+  &__brief {
+    font-size: 28rpx;
+    color: $color-text-secondary;
+    line-height: 1.6;
+  }
+
+  &__hint {
+    display: block;
+    text-align: center;
+    color: $color-text-secondary;
+    padding: 120rpx 0;
+  }
+
+  &__footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: $spacing-md $spacing-lg;
+    padding-bottom: calc(#{$spacing-md} + env(safe-area-inset-bottom));
+    background-color: $color-card;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+    gap: $spacing-md;
+  }
+
+  &__fav {
+    width: 88rpx;
+    height: 88rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 44rpx;
+    border: 2rpx solid $color-border;
+    flex-shrink: 0;
+    font-size: 40rpx;
+  }
+
+  &__copy-btn {
+    flex: 1;
+    height: 88rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-primary;
+    border-radius: 44rpx;
+
+    &:active {
+      background-color: $color-primary-hover;
+    }
+  }
+
+  &__copy-text {
+    font-size: 28rpx;
+    font-weight: 500;
+    color: #fff;
+  }
+}

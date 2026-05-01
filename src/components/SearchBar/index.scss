@@ -1,0 +1,42 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  height: 72rpx;
+  background-color: $color-card;
+  border-radius: 36rpx;
+  border: 2rpx solid $color-border;
+  padding: 0 $spacing-md;
+
+  &:focus-within {
+    border-color: $color-primary;
+  }
+
+  &__icon {
+    font-size: 28rpx;
+    flex-shrink: 0;
+    margin-right: $spacing-xs;
+  }
+
+  &__input {
+    flex: 1;
+    height: 72rpx;
+    font-size: 28rpx;
+    color: $color-text-primary;
+  }
+
+  &__placeholder {
+    color: $color-text-secondary;
+    font-size: 28rpx;
+  }
+
+  &__clear {
+    width: 40rpx;
+    height: 40rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24rpx;
+    color: $color-text-secondary;
+    flex-shrink: 0;
+  }
+}

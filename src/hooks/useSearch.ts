@@ -1,0 +1,42 @@
+import { useState, useRef, useCallback } from 'react'
+import { loadAllCategories } from '@/services/data'
+import type { Book } from '@/services/data'
+import { filterBooks, debounce } from '@/utils/search'
+import { MIN_SEARCH_LENGTH, SEARCH_DEBOUNCE_MS } from '@/constants/cdn'
+
+export function useSearch() {
+  const [keyword, setKeyword] = useState('')
+  const [results, setResults] = useState<Book[]>([])
+  const [loading, setLoading] = useState(false)
+  const allBooksRef = useRef<Book[]>([])
+
+  const doSearch = useCallback(async (kw: string) => {
+    if (kw.length < MIN_SEARCH_LENGTH) {
+      setResults([])
+      return
+    }
+    setLoading(true)
+    try {
+      if (allBooksRef.current.length === 0) {
+        allBooksRef.current = await loadAllCategories()
+      }
+      setResults(filterBooks(allBooksRef.current, kw))
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  const debouncedSearch = useRef(debounce(doSearch, SEARCH_DEBOUNCE_MS)).current
+
+  const search = (kw: string) => {
+    setKeyword(kw)
+    debouncedSearch(kw)
+  }
+
+  const clear = () => {
+    setKeyword('')
+    setResults([])
+  }
+
+  return { keyword, results, loading, search, clear }
+}

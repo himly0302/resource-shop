@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "target": "es2017",
+    "module": "commonjs",
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "moduleResolution": "bundler",
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "rootDir": ".",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types", "node_modules/@tarojs"]
+  },
+  "include": ["./src", "./types", "./config"],
+  "compileOnSave": false
+}

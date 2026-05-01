@@ -1,0 +1,9 @@
+{
+  "miniprogramRoot": "dist/",
+  "projectname": "books-shop",
+  "appid": "touristappid",
+  "setting": {
+    "urlCheck": false
+  },
+  "compileType": "miniprogram"
+}
