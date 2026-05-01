@@ -22,11 +22,12 @@ npm run dev:h5        # 开发模式（H5 + watch）
 - 5 个 hooks 封装具体业务逻辑（加载、搜索、收藏、历史）
 - 页面和组件只消费 hooks 返回的数据
 
-**路由**：4 个页面，在 `src/app.config.ts` 中注册：
-- `pages/index/index` — 首页（分类网格 + 搜索 + 最近浏览）
+**路由**：5 个页面，在 `src/app.config.ts` 中注册：
+- `pages/index/index` — 首页（分类网格 + 搜索 + 最近浏览 + 精选书单）
 - `pages/category/index?type=xxx` — 分类列表（前端分页，每页 20）
 - `pages/detail/index?id=xxx` — 书籍详情（复制链接、收藏、分享）
 - `pages/favorites/index` — 收藏列表（取消收藏）
+- `pages/booklist/index?id=xxx` — 书单详情（静态配置的编辑精选书单）
 
 **工具函数**（`src/utils/`）：
 - `clipboard.ts` — 解析百度网盘链接并复制到剪贴板

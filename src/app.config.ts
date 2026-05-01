@@ -4,6 +4,7 @@ export default defineAppConfig({
     'pages/category/index',
     'pages/detail/index',
     'pages/favorites/index',
+    'pages/booklist/index',
   ],
   window: {
     backgroundTextStyle: 'light',

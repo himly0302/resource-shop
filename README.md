@@ -10,6 +10,7 @@
 - **收藏** — 本地收藏喜欢的书籍，独立收藏页面管理
 - **分享** — 分享书籍给微信好友
 - **浏览历史** — 自动记录浏览过的书籍，首页展示最近 10 条
+- **书单推荐** — 编辑精选书单，一键浏览推荐好书
 
 ## 技术栈
 
@@ -39,10 +40,10 @@ npm run dev:h5        # H5 开发模式
 ```
 src/
 ├── assets/styles/    # SCSS 全局变量
-├── components/       # 公共组件（BookCard, CategoryCard, SearchBar）
-├── constants/        # CDN URL、存储 Key、分页等常量
+├── components/       # 公共组件（BookCard, CategoryCard, BookListCard, SearchBar）
+├── constants/        # CDN URL、存储 Key、书单配置、分页等常量
 ├── hooks/            # 业务 hooks（configs, category, search, history, favorites）
-├── pages/            # 页面（index, category, detail, favorites）
+├── pages/            # 页面（index, category, detail, favorites, booklist）
 ├── services/         # 数据加载与缓存
 └── utils/            # 工具函数（剪贴板、搜索）
 ```

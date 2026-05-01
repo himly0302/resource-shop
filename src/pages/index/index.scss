@@ -99,6 +99,32 @@
     }
   }
 
+  &__section-title {
+    display: block;
+    font-size: 28rpx;
+    font-weight: 600;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+  }
+
+  &__booklists {
+    padding: $spacing-md $spacing-lg 0;
+
+    &-scroll {
+      white-space: nowrap;
+    }
+
+    .booklist-card {
+      display: inline-flex;
+      margin-right: $spacing-md;
+      vertical-align: top;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
   &__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

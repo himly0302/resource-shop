@@ -3,11 +3,13 @@ import Taro from '@tarojs/taro'
 import SearchBar from '@/components/SearchBar'
 import CategoryCard from '@/components/CategoryCard'
 import BookCard from '@/components/BookCard'
+import BookListCard from '@/components/BookListCard'
 import { useConfigs } from '@/hooks/useConfigs'
 import { useSearch } from '@/hooks/useSearch'
 import { useFavorites } from '@/hooks/useFavorites'
 import { useHistory } from '@/hooks/useHistory'
 import { MIN_SEARCH_LENGTH } from '@/constants/cdn'
+import { BOOK_LISTS } from '@/constants/booklists'
 import './index.scss'
 
 export default function IndexPage() {
@@ -24,8 +26,13 @@ export default function IndexPage() {
     Taro.navigateTo({ url: `/pages/detail/index?id=${encodeURIComponent(bookId)}` })
   }
 
+  const goToBookList = (id: string) => {
+    Taro.navigateTo({ url: `/pages/booklist/index?id=${encodeURIComponent(id)}` })
+  }
+
   const inSearchMode = keyword.length > 0
   const recentHistory = history.slice(0, 10)
+  const showRecent = recentHistory.length >= 5
 
   return (
     <View className="index-page">
@@ -60,7 +67,7 @@ export default function IndexPage() {
         </View>
       ) : (
         <>
-          {recentHistory.length > 0 && (
+          {showRecent && (
             <View className="index-page__recent">
               <View className="index-page__recent-header">
                 <Text className="index-page__recent-title">最近浏览</Text>
@@ -80,6 +87,14 @@ export default function IndexPage() {
               </ScrollView>
             </View>
           )}
+          <View className="index-page__booklists">
+            <Text className="index-page__section-title">精选书单</Text>
+            <ScrollView scrollX className="index-page__booklists-scroll">
+              {BOOK_LISTS.map((bl) => (
+                <BookListCard key={bl.id} bookList={bl} onClick={goToBookList} />
+              ))}
+            </ScrollView>
+          </View>
           <View className="index-page__categories">
             {loading ? (
               <Text className="index-page__hint">加载中...</Text>
