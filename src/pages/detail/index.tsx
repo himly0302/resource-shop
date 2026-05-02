@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { loadCategory, loadAllCategories } from '@/services/data'
 import type { Book } from '@/services/data'
 import { CATEGORY_COLORS, DETAIL_IMG_PARAMS } from '@/constants/cdn'
-import { copyDownloadLink, parseBaiduLink } from '@/utils/clipboard'
+import { copyDownloadLink, buildFullUrl } from '@/utils/clipboard'
 import { useFavorites } from '@/hooks/useFavorites'
 import { useHistory } from '@/hooks/useHistory'
 import SafeImage from '@/components/SafeImage'
@@ -21,9 +21,7 @@ export default function DetailPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [guideVisible, setGuideVisible] = useState(false)
-  const [guideText, setGuideText] = useState('')
-  const [guideLink, setGuideLink] = useState('')
-  const [guidePwd, setGuidePwd] = useState<string | null>(null)
+  const [guideUrl, setGuideUrl] = useState('')
   const { toggle, isFavorite } = useFavorites()
   const { add } = useHistory()
 
@@ -95,11 +93,8 @@ export default function DetailPage() {
 
   const handleCopy = async () => {
     try {
-      const text = await copyDownloadLink(book.bd_link)
-      const { url, pwd } = parseBaiduLink(book.bd_link)
-      setGuideText(text)
-      setGuideLink(url)
-      setGuidePwd(pwd)
+      await copyDownloadLink(book.bd_link)
+      setGuideUrl(buildFullUrl(book.bd_link))
       setGuideVisible(true)
     } catch {
       Taro.showToast({ title: '复制失败，请重试', icon: 'none' })
@@ -148,22 +143,11 @@ export default function DetailPage() {
       {guideVisible && (
         <View className="guide-overlay" onClick={() => setGuideVisible(false)}>
           <View className="guide-panel" onClick={(e) => e.stopPropagation()}>
-            <Text className="guide-panel__title">链接已复制到剪贴板</Text>
+            <Text className="guide-panel__title">链接已复制</Text>
             <View className="guide-panel__link-box">
-              <Text className="guide-panel__link-text">{guideLink}</Text>
-              {guidePwd && (
-                <Text className="guide-panel__link-text">提取码：{guidePwd}</Text>
-              )}
+              <Text className="guide-panel__link-text">{guideUrl}</Text>
             </View>
-            <Text className="guide-panel__steps-title">接下来：</Text>
-            <View className="guide-panel__step">
-              <Text className="guide-panel__step-num">1</Text>
-              <Text className="guide-panel__step-text">打开「百度网盘」App</Text>
-            </View>
-            <View className="guide-panel__step">
-              <Text className="guide-panel__step-num">2</Text>
-              <Text className="guide-panel__step-text">粘贴分享链接到搜索栏</Text>
-            </View>
+            <Text className="guide-panel__hint">打开「百度网盘」粘贴即可下载</Text>
             <View className="guide-panel__close-btn" onClick={() => setGuideVisible(false)}>
               <Text className="guide-panel__close-text">知道了</Text>
             </View>

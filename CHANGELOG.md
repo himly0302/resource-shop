@@ -5,6 +5,8 @@
 ### Changed
 - **移除 CONFIGS_URL 冗余配置**：分类数据 URL 改为直接拼接 `CDN_BASE/{type}.json`，减少一次网络请求
   - 相关文件：`src/constants/cdn.ts`、`src/services/data.ts`、`src/hooks/useConfigs.ts`
+- **下载链接复制优化**：复制带提取码的完整 URL（`?pwd=xxx`），简化引导面板为一步操作
+  - 相关文件：`src/utils/clipboard.ts`、`src/pages/detail/index.tsx`
 
 ### Fixed
 - 详情页携带 `type` 参数，优先 `loadCategory(type)` 单分类加载，避免加载全部数据

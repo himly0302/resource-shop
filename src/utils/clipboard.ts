@@ -14,13 +14,13 @@ export function parseBaiduLink(bdLink: string): ParsedLink {
   }
 }
 
-export function formatDownloadText(bdLink: string): string {
+export function buildFullUrl(bdLink: string): string {
   const { url, pwd } = parseBaiduLink(bdLink)
-  return pwd ? `链接：${url}\n提取码：${pwd}` : url
+  return pwd ? `${url}?pwd=${pwd}` : url
 }
 
 export async function copyDownloadLink(bdLink: string): Promise<string> {
-  const text = formatDownloadText(bdLink)
-  await Taro.setClipboardData({ data: text })
-  return text
+  const fullUrl = buildFullUrl(bdLink)
+  await Taro.setClipboardData({ data: fullUrl })
+  return fullUrl
 }
