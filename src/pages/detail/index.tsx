@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { loadCategory, loadAllCategories } from '@/services/data'
 import type { Book } from '@/services/data'
 import { CATEGORY_COLORS, DETAIL_IMG_PARAMS } from '@/constants/cdn'
-import { copyDownloadLink } from '@/utils/clipboard'
+import { copyDownloadLink, parseBaiduLink } from '@/utils/clipboard'
 import { useFavorites } from '@/hooks/useFavorites'
 import { useHistory } from '@/hooks/useHistory'
 import SafeImage from '@/components/SafeImage'
@@ -20,6 +20,10 @@ export default function DetailPage() {
   const [book, setBook] = useState<Book | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [guideVisible, setGuideVisible] = useState(false)
+  const [guideText, setGuideText] = useState('')
+  const [guideLink, setGuideLink] = useState('')
+  const [guidePwd, setGuidePwd] = useState<string | null>(null)
   const { toggle, isFavorite } = useFavorites()
   const { add } = useHistory()
 
@@ -89,6 +93,19 @@ export default function DetailPage() {
 
   const color = CATEGORY_COLORS[book.type] || '#B2BEC3'
 
+  const handleCopy = async () => {
+    try {
+      const text = await copyDownloadLink(book.bd_link)
+      const { url, pwd } = parseBaiduLink(book.bd_link)
+      setGuideText(text)
+      setGuideLink(url)
+      setGuidePwd(pwd)
+      setGuideVisible(true)
+    } catch {
+      Taro.showToast({ title: '复制失败，请重试', icon: 'none' })
+    }
+  }
+
   return (
     <View className="detail-page">
       <View className="detail-page__body">
@@ -123,10 +140,40 @@ export default function DetailPage() {
         <Button className="detail-page__share-btn" openType="share">
           <Text className="detail-page__share-text">分享给好友</Text>
         </Button>
-        <View className="detail-page__copy-btn" onClick={() => copyDownloadLink(book.bd_link)}>
+        <View className="detail-page__copy-btn" onClick={handleCopy}>
           <Text className="detail-page__copy-text">复制下载链接</Text>
         </View>
       </View>
+
+      {guideVisible && (
+        <View className="guide-overlay" onClick={() => setGuideVisible(false)}>
+          <View className="guide-panel" onClick={(e) => e.stopPropagation()}>
+            <Text className="guide-panel__title">链接已复制到剪贴板</Text>
+            <View className="guide-panel__link-box">
+              <Text className="guide-panel__link-text">{guideLink}</Text>
+              {guidePwd && (
+                <Text className="guide-panel__link-text">提取码：{guidePwd}</Text>
+              )}
+            </View>
+            <Text className="guide-panel__steps-title">接下来：</Text>
+            <View className="guide-panel__step">
+              <Text className="guide-panel__step-num">1</Text>
+              <Text className="guide-panel__step-text">打开「百度网盘」App</Text>
+            </View>
+            <View className="guide-panel__step">
+              <Text className="guide-panel__step-num">2</Text>
+              <Text className="guide-panel__step-text">粘贴分享链接</Text>
+            </View>
+            <View className="guide-panel__step">
+              <Text className="guide-panel__step-num">3</Text>
+              <Text className="guide-panel__step-text">输入提取码（如有）</Text>
+            </View>
+            <View className="guide-panel__close-btn" onClick={() => setGuideVisible(false)}>
+              <Text className="guide-panel__close-text">知道了</Text>
+            </View>
+          </View>
+        </View>
+      )}
     </View>
   )
 }
