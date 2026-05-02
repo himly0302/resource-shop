@@ -162,11 +162,7 @@ export default function DetailPage() {
             </View>
             <View className="guide-panel__step">
               <Text className="guide-panel__step-num">2</Text>
-              <Text className="guide-panel__step-text">粘贴分享链接</Text>
-            </View>
-            <View className="guide-panel__step">
-              <Text className="guide-panel__step-num">3</Text>
-              <Text className="guide-panel__step-text">输入提取码（如有）</Text>
+              <Text className="guide-panel__step-text">粘贴分享链接到搜索栏</Text>
             </View>
             <View className="guide-panel__close-btn" onClick={() => setGuideVisible(false)}>
               <Text className="guide-panel__close-text">知道了</Text>
