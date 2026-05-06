@@ -1,9 +1,7 @@
 import type { UserConfigExport } from '@tarojs/cli'
 
 export default {
-  defineConstants: {
-    CDN_PROTOCOL: '"http"',
-  },
+  defineConstants: {},
   logger: {
     quiet: false,
     stats: true,

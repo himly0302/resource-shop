@@ -1,9 +1,7 @@
 import type { UserConfigExport } from '@tarojs/cli'
 
 export default {
-  defineConstants: {
-    CDN_PROTOCOL: '"https"',
-  },
+  defineConstants: {},
   mini: {},
   h5: {
     publicPath: './',

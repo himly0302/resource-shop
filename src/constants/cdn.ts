@@ -1,7 +1,5 @@
-declare const CDN_PROTOCOL: string
-
 /** CDN 基础路径 */
-export const CDN_BASE = `${CDN_PROTOCOL}://teaax7941.hn-bkt.clouddn.com/books-tidy/configs`
+export const CDN_BASE = 'https://qn-cdn.windlliu.com/books-tidy/configs'
 
 /** 分类汇总数据 */
 export const INDEX_URL = `${CDN_BASE}/index.json`
