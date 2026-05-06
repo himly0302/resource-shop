@@ -1,11 +1,11 @@
 import type { UserConfigExport } from '@tarojs/cli'
 
 export default {
-  defineConstants: {},
-  logger: {
-    quiet: false,
-    stats: true,
+  defineConstants: {
+    API_BASE: '"http://localhost:3333"',
   },
   mini: {},
-  h5: {},
+  h5: {
+    publicPath: './',
+  },
 } satisfies UserConfigExport
