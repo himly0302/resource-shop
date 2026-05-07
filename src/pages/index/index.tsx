@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, Image } from '@tarojs/components'
 import Taro from '@tarojs/taro'
+import { useState, useEffect } from 'react'
 import SearchBar from '@/components/SearchBar'
 import CategoryCard from '@/components/CategoryCard'
 import BookCard from '@/components/BookCard'
@@ -10,8 +11,9 @@ import { useConfigs } from '@/hooks/useConfigs'
 import { useSearch } from '@/hooks/useSearch'
 import { useFavorites } from '@/hooks/useFavorites'
 import { useHistory } from '@/hooks/useHistory'
-import { MIN_SEARCH_LENGTH, THUMB_PARAMS, toProxyUrl } from '@/constants/cdn'
-import { BOOK_LISTS } from '@/constants/booklists'
+import { MIN_SEARCH_LENGTH } from '@/constants/cdn'
+import { loadBookLists } from '@/services/data'
+import type { BookList } from '@/constants/booklists'
 import './index.scss'
 
 export default function IndexPage() {
@@ -19,6 +21,11 @@ export default function IndexPage() {
   const { keyword, results, loading: searchLoading, error: searchError, search, clear } = useSearch()
   const { history, clear: clearHistory } = useHistory()
   const { favorites } = useFavorites()
+  const [bookLists, setBookLists] = useState<BookList[]>([])
+
+  useEffect(() => {
+    loadBookLists().then(setBookLists).catch(() => {})
+  }, [])
 
   const goToCategory = (type: string) => {
     Taro.navigateTo({ url: `/pages/category/index?type=${encodeURIComponent(type)}` })
@@ -86,21 +93,23 @@ export default function IndexPage() {
                     className="index-page__recent-item"
                     onClick={() => goToDetail(item.id, item.type)}
                   >
-                    <Image className="index-page__recent-cover" src={toProxyUrl(item.picUrl + THUMB_PARAMS)} mode="aspectFill" lazyLoad />
+                    <Image className="index-page__recent-cover" src={item.picUrl} mode="aspectFill" lazyLoad />
                     <Text className="index-page__recent-name">{item.name}</Text>
                   </View>
                 ))}
               </ScrollView>
             </View>
           )}
-          <View className="index-page__booklists">
-            <Text className="index-page__section-title">精选书单</Text>
-            <ScrollView scrollX className="index-page__booklists-scroll">
-              {BOOK_LISTS.map((bl) => (
-                <BookListCard key={bl.id} bookList={bl} onClick={goToBookList} />
-              ))}
-            </ScrollView>
-          </View>
+          {bookLists.length > 0 && (
+            <View className="index-page__booklists">
+              <Text className="index-page__section-title">精选书单</Text>
+              <ScrollView scrollX className="index-page__booklists-scroll">
+                {bookLists.map((bl) => (
+                  <BookListCard key={bl.id} bookList={bl} onClick={goToBookList} />
+                ))}
+              </ScrollView>
+            </View>
+          )}
           <View className="index-page__categories">
             {loading ? (
               <View className="index-page__categories"><SkeletonCategoryGrid /></View>

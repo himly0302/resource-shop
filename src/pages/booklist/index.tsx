@@ -1,9 +1,9 @@
 import { View, Text } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import { useState, useEffect, useCallback } from 'react'
-import { loadCategory } from '@/services/data'
+import { loadCategory, loadBookLists } from '@/services/data'
 import type { Book } from '@/services/data'
-import { BOOK_LISTS } from '@/constants/booklists'
+import type { BookList } from '@/constants/booklists'
 import { PAGE_SIZE } from '@/constants/cdn'
 import BookCard from '@/components/BookCard'
 import ErrorView from '@/components/ErrorView'
@@ -14,7 +14,7 @@ import './index.scss'
 export default function BookListPage() {
   const router = useRouter()
   const id = router.params.id || ''
-  const bookList = BOOK_LISTS.find((bl) => bl.id === id)
+  const [bookList, setBookList] = useState<BookList | undefined>()
 
   const [books, setBooks] = useState<Book[]>([])
   const [loading, setLoading] = useState(true)
@@ -22,15 +22,18 @@ export default function BookListPage() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
   const loadBooks = useCallback(async () => {
-    if (!bookList) {
-      setLoading(false)
-      return
-    }
     setLoading(true)
     setError(null)
     try {
-      const types = [...new Set(bookList.books.map((b) => b.type))]
-      const idSet = new Set(bookList.books.map((b) => b.id))
+      const lists = await loadBookLists()
+      const bl = lists.find((item) => item.id === id)
+      if (!bl) {
+        setLoading(false)
+        return
+      }
+      setBookList(bl)
+      const types = [...new Set(bl.books.map((b) => b.type))]
+      const idSet = new Set(bl.books.map((b) => b.id))
       const loaded = await Promise.all(types.map((t) => loadCategory(t)))
       setBooks(loaded.flat().filter((b) => idSet.has(b.id)))
     } catch (e) {

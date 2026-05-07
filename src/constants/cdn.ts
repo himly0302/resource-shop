@@ -1,17 +1,14 @@
-/** CDN 域名 */
-export const CDN_HOST = 'https://qn-cdn.windlliu.com'
+/** 资源基础路径 */
+export const RESOURCE_BASE = 'https://qn-cdn.windlliu.com/v1/books-shop'
 
-/** CDN 基础路径 */
-export const CDN_BASE = `${CDN_HOST}/books-tidy/configs`
+/** CDN 域名前缀 */
+const CDN_ORIGIN = 'https://qn-cdn.windlliu.com/v1'
 
-/** 分类汇总数据 */
-export const INDEX_URL = `${CDN_BASE}/index.json`
-
-/** 七牛云缩略图参数 */
-export const THUMB_PARAMS = '?imageView2/2/w/200/h/280/q/85'
-
-/** 详情页大图参数 */
-export const DETAIL_IMG_PARAMS = '?imageView2/2/w/400/h/560/q/90'
+/** 将相对路径转换为完整 URL */
+export function resolveUrl(path: string): string {
+  if (!path || path.startsWith('http')) return path
+  return `${CDN_ORIGIN}/${path}`
+}
 
 /** 分类配色映射 */
 export const CATEGORY_COLORS: Record<string, string> = {
@@ -53,9 +50,3 @@ export const MAX_FAVORITES = 100
 
 /** 浏览历史上限 */
 export const MAX_HISTORY = 50
-
-/** 将 CDN URL 转换为后端签名代理 URL */
-export function toProxyUrl(url: string): string {
-  if (!url.startsWith(CDN_HOST)) return url
-  return `${API_BASE}/qn/cdn${url.slice(CDN_HOST.length)}`
-}

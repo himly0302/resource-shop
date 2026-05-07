@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { View, Text, Image } from '@tarojs/components'
-import { toProxyUrl } from '@/constants/cdn'
 import './index.scss'
 
 interface SafeImageProps {
@@ -24,7 +23,7 @@ export default function SafeImage({ src, className = '', mode = 'aspectFill', la
   return (
     <Image
       className={className}
-      src={toProxyUrl(src)}
+      src={src}
       mode={mode}
       lazyLoad={lazyLoad}
       onError={() => setError(true)}

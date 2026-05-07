@@ -3,7 +3,7 @@ import Taro, { useRouter, useShareAppMessage } from '@tarojs/taro'
 import { useState, useEffect, useCallback } from 'react'
 import { loadCategory, loadAllCategories } from '@/services/data'
 import type { Book } from '@/services/data'
-import { CATEGORY_COLORS, DETAIL_IMG_PARAMS } from '@/constants/cdn'
+import { CATEGORY_COLORS } from '@/constants/cdn'
 import { copyDownloadLink, buildFullUrl } from '@/utils/clipboard'
 import { useFavorites } from '@/hooks/useFavorites'
 import { useHistory } from '@/hooks/useHistory'
@@ -105,7 +105,7 @@ export default function DetailPage() {
       <View className="detail-page__body">
         <SafeImage
           className="detail-page__cover"
-          src={book.picUrl + DETAIL_IMG_PARAMS}
+          src={book.picUrl}
           mode="aspectFit"
           lazyLoad
         />

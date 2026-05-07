@@ -1,7 +1,6 @@
 import { View, Text } from '@tarojs/components'
 import SafeImage from '@/components/SafeImage'
 import type { Book } from '@/services/data'
-import { THUMB_PARAMS } from '@/constants/cdn'
 import './index.scss'
 
 interface BookCardProps {
@@ -15,7 +14,7 @@ export default function BookCard({ book, onClick, action }: BookCardProps) {
     <View className="book-card" onClick={() => onClick(book)}>
       <SafeImage
         className="book-card__cover"
-        src={book.picUrl + THUMB_PARAMS}
+        src={book.picUrl}
         mode="aspectFill"
         lazyLoad
       />
