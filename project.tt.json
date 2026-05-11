@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "dist/",
-  "projectname": "books-shop",
+  "projectname": "resource-shop",
   "appid": "touristappid",
   "setting": {
     "urlCheck": false

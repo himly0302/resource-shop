@@ -9,6 +9,8 @@
   - 相关文件：`src/utils/clipboard.ts`、`src/pages/detail/index.tsx`
 
 ### Fixed
+- 补充缺失的 `src/index.html` 模板文件，修复 H5 模式页面只显示 `~ /` 而无内容的问题
+- 补充缺失的 `@pmmmwh/react-refresh-webpack-plugin` 依赖，修复 H5 开发模式启动报 MODULE_NOT_FOUND 错误
 - 详情页携带 `type` 参数，优先 `loadCategory(type)` 单分类加载，避免加载全部数据
 - 浏览历史记录增加 `type` 字段，支持从历史跳转时走单分类加载
 - 书单配置增加每本书的分类信息，书单详情页按需加载涉及分类而非全量

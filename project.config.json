@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "dist/",
-  "projectname": "books-shop",
+  "projectname": "resource-shop",
   "description": "免费图书分享小程序",
   "appid": "wx864c9ece2d305f50",
   "setting": {
