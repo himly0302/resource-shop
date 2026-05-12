@@ -131,7 +131,7 @@ export default function IndexPage() {
             )}
           </View>
           <View className="index-page__disclaimer">
-            <Text>本小程序仅供学习交流，资源来源于互联网</Text>
+            <Text>{process.env.TARO_ENV === 'h5' ? '本网站仅供学习交流，资源来源于互联网' : '本小程序仅供学习交流，资源来源于互联网'}</Text>
             <Text>如有侵权请联系 823088131@qq.com 删除</Text>
           </View>
         </>

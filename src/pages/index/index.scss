@@ -1,6 +1,6 @@
 .index-page {
   min-height: 100vh;
-  padding-bottom: $spacing-xl;
+  padding-bottom: 120rpx;
 
   &__header {
     padding: $spacing-lg;
@@ -159,11 +159,17 @@
   }
 
   &__disclaimer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8rpx;
-    padding: $spacing-lg $spacing-lg $spacing-xl;
+    padding: $spacing-md $spacing-lg;
+    padding-bottom: calc(#{$spacing-md} + env(safe-area-inset-bottom));
+    background-color: $color-bg;
     font-size: 22rpx;
     color: $color-text-secondary;
     line-height: 1.5;
