@@ -1,5 +1,5 @@
 /** 资源基础路径 */
-export const RESOURCE_BASE = 'https://qn-cdn.windlliu.com/v1/books-shop'
+export const RESOURCE_BASE = 'https://qn-cdn.windlliu.com/v1/resource-shop'
 
 /** CDN 域名前缀 */
 const CDN_ORIGIN = 'https://qn-cdn.windlliu.com/v1'
