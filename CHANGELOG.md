@@ -13,7 +13,7 @@
   - 详情页分享按钮在 H5 端隐藏（小程序专属功能）
   - 详情页类型标签垂直居中对齐
   - 搜索栏图标与文字垂直居中对齐
-  - 搜索栏清除按钮去重（隐藏浏览器原生清除图标）
+  - 搜索栏清除按钮去重（隐藏浏览器原生清除图标，通过 `appearance: none` 彻底移除）
   - 相关文件：`detail/index.tsx`、`detail/index.scss`、`SearchBar/index.scss`
 - 补充缺失的 `src/index.html` 模板文件，修复 H5 模式页面只显示 `~ /` 而无内容的问题
 - 补充缺失的 `@pmmmwh/react-refresh-webpack-plugin` 依赖，修复 H5 开发模式启动报 MODULE_NOT_FOUND 错误

@@ -25,6 +25,12 @@
     height: 72rpx;
     font-size: 28rpx;
     color: $color-text-primary;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0;
   }
 
   &__placeholder {
