@@ -1,6 +1,7 @@
 .index-page {
   min-height: 100vh;
   padding-bottom: 120rpx;
+  box-sizing: border-box;
 
   &__header {
     padding: $spacing-lg;
